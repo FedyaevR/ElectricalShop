@@ -167,7 +167,9 @@ namespace ElectricalShop.View
             this.Controls.Add(this.textBox_LastName);
             this.Controls.Add(this.textBox_FirstName);
             this.Name = "RegisterForm";
-            this.Text = "RegisterForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Регистрация";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.RegisterForm_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Age)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

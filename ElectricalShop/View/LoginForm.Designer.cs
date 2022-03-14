@@ -29,8 +29,8 @@ namespace ElectricalShop.View
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox_Login = new System.Windows.Forms.TextBox();
+            this.textBox_Password = new System.Windows.Forms.TextBox();
             this.button_Enter = new System.Windows.Forms.Button();
             this.linkLabel_AdminLogin = new System.Windows.Forms.LinkLabel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
@@ -38,19 +38,19 @@ namespace ElectricalShop.View
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // textBox1
+            // textBox_Login
             // 
-            this.textBox1.Location = new System.Drawing.Point(104, 91);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(234, 22);
-            this.textBox1.TabIndex = 0;
+            this.textBox_Login.Location = new System.Drawing.Point(104, 91);
+            this.textBox_Login.Name = "textBox_Login";
+            this.textBox_Login.Size = new System.Drawing.Size(234, 22);
+            this.textBox_Login.TabIndex = 0;
             // 
-            // textBox2
+            // textBox_Password
             // 
-            this.textBox2.Location = new System.Drawing.Point(104, 138);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(234, 22);
-            this.textBox2.TabIndex = 1;
+            this.textBox_Password.Location = new System.Drawing.Point(104, 138);
+            this.textBox_Password.Name = "textBox_Password";
+            this.textBox_Password.Size = new System.Drawing.Size(234, 22);
+            this.textBox_Password.TabIndex = 1;
             // 
             // button_Enter
             // 
@@ -60,6 +60,7 @@ namespace ElectricalShop.View
             this.button_Enter.TabIndex = 2;
             this.button_Enter.Text = "Войти";
             this.button_Enter.UseVisualStyleBackColor = true;
+            this.button_Enter.Click += new System.EventHandler(this.button_Enter_Click);
             // 
             // linkLabel_AdminLogin
             // 
@@ -70,6 +71,7 @@ namespace ElectricalShop.View
             this.linkLabel_AdminLogin.TabIndex = 3;
             this.linkLabel_AdminLogin.TabStop = true;
             this.linkLabel_AdminLogin.Text = "Зайти как администратор";
+            this.linkLabel_AdminLogin.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_AdminLogin_LinkClicked);
             // 
             // linkLabel1
             // 
@@ -110,10 +112,11 @@ namespace ElectricalShop.View
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.linkLabel_AdminLogin);
             this.Controls.Add(this.button_Enter);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBox_Password);
+            this.Controls.Add(this.textBox_Login);
             this.Name = "LoginForm";
-            this.Text = "LoginForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Авторизация";
             this.Load += new System.EventHandler(this.LoginForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -122,8 +125,8 @@ namespace ElectricalShop.View
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox_Login;
+        private System.Windows.Forms.TextBox textBox_Password;
         private System.Windows.Forms.Button button_Enter;
         private System.Windows.Forms.LinkLabel linkLabel_AdminLogin;
         private System.Windows.Forms.LinkLabel linkLabel1;
