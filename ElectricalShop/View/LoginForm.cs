@@ -8,15 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using ElectricalShop.Controller;
 using System.Windows.Forms;
+using ElectricalShop.Model;
 
 namespace ElectricalShop.View
 {
     public partial class LoginForm : Form
     {
+        TableProduct tableProduct = new TableProduct();
         UserController _userController = new UserController();
         public LoginForm()
         {
             InitializeComponent();
+            
         }
 
         private void LoginForm_Load(object sender, EventArgs e)
@@ -34,7 +37,7 @@ namespace ElectricalShop.View
 
         private async void button_Enter_Click(object sender, EventArgs e)
         {
-        
+            await tableProduct.ShowProduct(1, 1);
             this.Visible = false;
             if (await _userController.Enter(textBox_Login.Text, textBox_Password.Text) == "Пользователь")
             {

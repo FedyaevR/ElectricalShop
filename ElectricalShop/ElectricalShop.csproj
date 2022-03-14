@@ -56,6 +56,31 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\UserController.cs" />
+    <Compile Include="Model\ProductCategory.cs">
+      <DependentUpon>Product_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ProductItem.cs">
+      <DependentUpon>Product_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ProductType.cs">
+      <DependentUpon>Product_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Product_DB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Product_DB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Product_DB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Product_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Product_DB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Product_DB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TableProduct.cs" />
     <Compile Include="Model\TableUsers.cs" />
     <Compile Include="Model\User.cs">
       <DependentUpon>User_DB.tt</DependentUpon>
@@ -123,6 +148,13 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>User_DB.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="Model\Product_DB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Product_DB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\Product_DB.edmx.diagram">
+      <DependentUpon>Product_DB.edmx</DependentUpon>
+    </None>
     <None Include="Model\User_DB.edmx.diagram">
       <DependentUpon>User_DB.edmx</DependentUpon>
     </None>
@@ -141,6 +173,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Model\Product_DB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Product_DB.edmx</DependentUpon>
+      <LastGenOutput>Product_DB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\Product_DB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Product_DB.edmx</DependentUpon>
+      <LastGenOutput>Product_DB.cs</LastGenOutput>
+    </Content>
     <Content Include="Model\User_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>User_DB.Context.cs</LastGenOutput>
