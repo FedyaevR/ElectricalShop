@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ElectricalShop.View
 {
-    public partial class ShopForm : Form
+    public partial class DeleteProductForm : Form
     {
-        public ShopForm(Form loginForm)
+        public DeleteProductForm()
         {
             InitializeComponent();
         }

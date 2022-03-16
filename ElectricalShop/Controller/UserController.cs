@@ -12,18 +12,18 @@ namespace ElectricalShop.Controller
     {
         TableUsers _tableUsers = new TableUsers();
 
-        public async Task<bool>  AddUser(string _firstName, string _lastName, int _age, string _userCategory, string _login, string _password)
+        public async Task<bool>  AddUser(string firstName, string lastName, int age, string userCategory, string login, string password)
         {
-            if (await _tableUsers.AddNewUserAsync(_firstName, _lastName, _age,_userCategory, _login, _password))
+            if (await _tableUsers.AddNewUserAsync(firstName, lastName, age,userCategory, login, password))
             {
                 return true;
             }
             return false;
         }
-        public async Task<string> Enter(string _login, string _password, bool _admin = false)
+        public async Task<string> Enter(string login, string password, bool admin = false)
         {
 
-            if (await _tableUsers.EnterAsync(_login, _password, _admin) == "Администратор")
+            if (await _tableUsers.EnterAsync(login, password, admin) == "Администратор")
             {
                 return "Администратор";
             }

@@ -14,11 +14,11 @@ namespace ElectricalShop.View
     public partial class RegisterForm : Form
     {
         Form _loginForm;
-        public RegisterForm(Form _loginForm)
+        public RegisterForm(Form loginForm)
         {
             InitializeComponent();
             comboBox_UserCategory.SelectedIndex = 0;
-            this._loginForm = _loginForm;
+            this._loginForm = loginForm;
         }
 
         private async void button_Register_Click(object sender, EventArgs e)

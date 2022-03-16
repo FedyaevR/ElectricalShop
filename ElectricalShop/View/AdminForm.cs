@@ -12,14 +12,23 @@ namespace ElectricalShop.View
 {
     public partial class AdminForm : Form
     {
-        public AdminForm(Form _loginForm)
+        Form _loginForm;
+        public AdminForm(Form loginForm)
         {
             InitializeComponent();
+            _loginForm = loginForm;
         }
 
-        private void AdminForm_Load(object sender, EventArgs e)
+        private void button_AddProduct_Click(object sender, EventArgs e)
         {
+            this.Visible = false; 
+            AddProductForm addProductForm = new AddProductForm(this, _loginForm);
+            addProductForm.ShowDialog();
+        }
 
+        private void AdminForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _loginForm.Visible = true;
         }
     }
 }

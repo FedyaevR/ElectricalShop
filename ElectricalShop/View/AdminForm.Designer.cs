@@ -29,20 +29,58 @@ namespace ElectricalShop.View
         /// </summary>
         private void InitializeComponent()
         {
+            this.button_AddProduct = new System.Windows.Forms.Button();
+            this.button_DeleteProduct = new System.Windows.Forms.Button();
+            this.button_UpdateProduct = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            // 
+            // button_AddProduct
+            // 
+            this.button_AddProduct.Location = new System.Drawing.Point(12, 12);
+            this.button_AddProduct.Name = "button_AddProduct";
+            this.button_AddProduct.Size = new System.Drawing.Size(277, 69);
+            this.button_AddProduct.TabIndex = 0;
+            this.button_AddProduct.Text = "Добавить продукт";
+            this.button_AddProduct.UseVisualStyleBackColor = true;
+            this.button_AddProduct.Click += new System.EventHandler(this.button_AddProduct_Click);
+            // 
+            // button_DeleteProduct
+            // 
+            this.button_DeleteProduct.Location = new System.Drawing.Point(12, 124);
+            this.button_DeleteProduct.Name = "button_DeleteProduct";
+            this.button_DeleteProduct.Size = new System.Drawing.Size(277, 69);
+            this.button_DeleteProduct.TabIndex = 1;
+            this.button_DeleteProduct.Text = "Удалить продукт";
+            this.button_DeleteProduct.UseVisualStyleBackColor = true;
+            // 
+            // button_UpdateProduct
+            // 
+            this.button_UpdateProduct.Location = new System.Drawing.Point(12, 240);
+            this.button_UpdateProduct.Name = "button_UpdateProduct";
+            this.button_UpdateProduct.Size = new System.Drawing.Size(277, 69);
+            this.button_UpdateProduct.TabIndex = 2;
+            this.button_UpdateProduct.Text = "Редактировать продукт";
+            this.button_UpdateProduct.UseVisualStyleBackColor = true;
             // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(666, 559);
+            this.ClientSize = new System.Drawing.Size(301, 321);
+            this.Controls.Add(this.button_UpdateProduct);
+            this.Controls.Add(this.button_DeleteProduct);
+            this.Controls.Add(this.button_AddProduct);
             this.Name = "AdminForm";
             this.Text = "AdminForm";
-            this.Load += new System.EventHandler(this.AdminForm_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AdminForm_FormClosing);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Button button_AddProduct;
+        private System.Windows.Forms.Button button_DeleteProduct;
+        private System.Windows.Forms.Button button_UpdateProduct;
     }
 }
