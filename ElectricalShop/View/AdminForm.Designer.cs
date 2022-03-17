@@ -71,6 +71,7 @@ namespace ElectricalShop.View
             this.Controls.Add(this.button_DeleteProduct);
             this.Controls.Add(this.button_AddProduct);
             this.Name = "AdminForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "AdminForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AdminForm_FormClosing);
             this.ResumeLayout(false);

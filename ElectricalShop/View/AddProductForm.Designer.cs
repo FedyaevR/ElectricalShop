@@ -65,6 +65,7 @@ namespace ElectricalShop.View
             this.button_AddItemPicture.TabIndex = 38;
             this.button_AddItemPicture.Text = "Добавить изображение";
             this.button_AddItemPicture.UseVisualStyleBackColor = true;
+            this.button_AddItemPicture.Click += new System.EventHandler(this.button_AddItemPicture_Click);
             // 
             // button_Cancel
             // 
@@ -77,6 +78,7 @@ namespace ElectricalShop.View
             // 
             // pictureBox_ItemPicture
             // 
+            this.pictureBox_ItemPicture.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox_ItemPicture.Location = new System.Drawing.Point(416, 36);
             this.pictureBox_ItemPicture.Name = "pictureBox_ItemPicture";
             this.pictureBox_ItemPicture.Size = new System.Drawing.Size(311, 267);
@@ -125,9 +127,9 @@ namespace ElectricalShop.View
             this.label_ItemPrice.AutoSize = true;
             this.label_ItemPrice.Location = new System.Drawing.Point(13, 219);
             this.label_ItemPrice.Name = "label_ItemPrice";
-            this.label_ItemPrice.Size = new System.Drawing.Size(112, 17);
+            this.label_ItemPrice.Size = new System.Drawing.Size(161, 17);
             this.label_ItemPrice.TabIndex = 31;
-            this.label_ItemPrice.Text = "Цена продукта:";
+            this.label_ItemPrice.Text = "Цена продукта(рубли):";
             // 
             // label_ItemName
             // 
@@ -178,6 +180,7 @@ namespace ElectricalShop.View
             // 
             // numericUpDown_ItemPrice
             // 
+            this.numericUpDown_ItemPrice.DecimalPlaces = 2;
             this.numericUpDown_ItemPrice.Location = new System.Drawing.Point(13, 239);
             this.numericUpDown_ItemPrice.Maximum = new decimal(new int[] {
             100000000,
@@ -281,6 +284,7 @@ namespace ElectricalShop.View
             this.Controls.Add(this.comboBox_ProductCategory);
             this.Controls.Add(this.comboBox_ProductType);
             this.Name = "AddProductForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "AddProductForm";
             this.Load += new System.EventHandler(this.AddProductForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_ItemPicture)).EndInit();

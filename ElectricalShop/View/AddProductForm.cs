@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ElectricalShop.Controller;
 using System.Windows.Forms;
+using System.Drawing.Imaging;
 
 namespace ElectricalShop.View
 {
@@ -16,6 +17,7 @@ namespace ElectricalShop.View
         Form _loginForm;
         Form _adminForm;
         AdminController _adminController = new AdminController();
+        Image _productImage;
         public AddProductForm(Form loginForm, Form adminForm)
         {
             InitializeComponent();
@@ -36,14 +38,30 @@ namespace ElectricalShop.View
         private async void button_AddProduct_Click(object sender, EventArgs e)
         {
             var type = comboBox_ProductType.SelectedItem.ToString();
-            var category = comboBox_ProductCategory.SelectedIndex.ToString();
+            var category = comboBox_ProductCategory.SelectedItem.ToString();
             var itemName = textBox_ItemName.Text;
             var itemPrice = numericUpDown_ItemPrice.Value;
             var itemColor = textBox_ItemColor.Text;
             var itemAmount = (int)numericUpDown_CountAmount.Value;
             var itemCharacteristic = textBox_ItemCharacteristic.Text;
             var itemDescription = textBox_ItemDescription.Text;
-            await  Task.Run(()=>_adminController.AddProduct(type, category,itemName,itemPrice,itemColor,itemAmount,itemCharacteristic, itemDescription));
+            if(await  Task.Run(()=>_adminController.AddProduct(type, category,itemName,itemPrice,itemColor,itemAmount,itemCharacteristic, itemDescription, _productImage)))
+            {
+                MessageBox.Show("Продукт добавлен!");
+                comboBox_ProductType.SelectedIndex = 0;
+                comboBox_ProductCategory.SelectedIndex = 0;
+                textBox_ItemName.Text = "";
+                numericUpDown_ItemPrice.Value = 0;
+                textBox_ItemColor.Text = "";
+                numericUpDown_CountAmount.Value = 0;
+                textBox_ItemCharacteristic.Text = "";
+                textBox_ItemDescription.Text = "";
+            }
+            else
+            {
+                MessageBox.Show("Продукт не добавлен!");
+            }
+           
         }
 
         private async void AddProductForm_Load(object sender, EventArgs e)
@@ -51,7 +69,9 @@ namespace ElectricalShop.View
             var resultType = await _adminController.LoadProductType();
             comboBox_ProductType.Items.AddRange(resultType.ToArray());
             comboBox_ProductType.SelectedIndex = 0;
+            
             var resultCategory = await _adminController.LoadProductCategory(comboBox_ProductType.SelectedItem.ToString());
+            comboBox_ProductCategory.Items.Clear();
             comboBox_ProductCategory.Items.AddRange(resultCategory.ToArray());
         }
 
@@ -60,6 +80,22 @@ namespace ElectricalShop.View
             comboBox_ProductCategory.Items.Clear();
             var resultCategory = await _adminController.LoadProductCategory(comboBox_ProductType.SelectedItem.ToString());
             comboBox_ProductCategory.Items.AddRange(resultCategory.ToArray());
+        }
+
+        private void button_AddItemPicture_Click(object sender, EventArgs e)
+        {
+            openFileDialog_AddImage.FileName = "";
+            openFileDialog_AddImage.Filter = "jpeg|*.jpg|png|*.png|bmp|*.bmp";
+            if (DialogResult.OK == openFileDialog_AddImage.ShowDialog())
+            {
+                _productImage = Image.FromFile(openFileDialog_AddImage.FileName);
+                pictureBox_ItemPicture.Image = _productImage;
+                if (_productImage.RawFormat.Equals(ImageFormat.Png))
+                {
+                    MessageBox.Show("Победа");
+                }
+            }
+
         }
     }
 }

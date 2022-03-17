@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,8 +43,8 @@ namespace ElectricalShop.Model
                                              select category.Category).ToList<string>());
             }
         }
-        public async void AddProduct(string productType, string productCategory, string productName, decimal productPrice,
-            string productColor, int productAmount, string productCharacteristic, string productDescription, Image image = null)
+        public async Task<bool> AddProduct(string productType, string productCategory, string productName, decimal productPrice,
+            string productColor, int productAmount, string productCharacteristic, string productDescription, Image productImage = null)
         {
             
             if (productName.Length < 3 )
@@ -58,14 +59,38 @@ namespace ElectricalShop.Model
             {
                 throw new ArgumentException("Amount of product can't be less than one");
             }
+            
             using (Product_DB db = new Product_DB())
             {
-                byte[] temp = {1,2,3,4,5};//заглушка для изображения
-                await Task.Run(() => db.ProductType.Add(new ProductType() {Type = productType }));
-                await Task.Run(() => db.ProductCategory.Add(new ProductCategory() { Category = productCategory }));
+                var productCategoryId = db.ProductCategory.FirstOrDefault(i => i.Category == productCategory).Id;
+                System.IO.MemoryStream memoryStream = new System.IO.MemoryStream();
+                byte[] image = { 1,2,3};
+                if (productImage.RawFormat.Equals(ImageFormat.Jpeg))
+                {
+                    productImage.Save(memoryStream, ImageFormat.Jpeg);
+                    image = memoryStream.ToArray();
+                }
+                else if (productImage.RawFormat.Equals(ImageFormat.Png))
+                {
+                    productImage.Save(memoryStream, ImageFormat.Png);
+                    image = memoryStream.ToArray();
+                }
+                else if (productImage.RawFormat.Equals(ImageFormat.Bmp))
+                {
+                    productImage.Save(memoryStream, ImageFormat.Bmp);
+                    image = memoryStream.ToArray();
+                }
+               
+                
+               
                 await Task.Run(() => db.ProductItem.Add(new ProductItem() {ItemName = productName, ItemPrice = productPrice, ItemColor = productColor,
-                ItemAmount = productAmount, ItemCharacteristics = productCharacteristic, ItemDescription = productCharacteristic, ItemImage = temp}));
-                await db.SaveChangesAsync();            
+                ItemAmount = productAmount, ItemCharacteristics = productCharacteristic, ItemDescription = productDescription, ItemImage = image, CategoryId = productCategoryId}));
+                var count = await db.SaveChangesAsync();
+                if (count > 0)
+                {
+                    return true;
+                }
+                return false;
             }
         }
     }

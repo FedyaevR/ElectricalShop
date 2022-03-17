@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,10 +21,14 @@ namespace ElectricalShop.Controller
         {
             return await _tableProduct.ShowProductCategory(type);
         }
-        public async void AddProduct(string productType, string productCategory, string productName, decimal productPrice,
-            string productColor, int productAmount, string productCharacteristic, string productDescription, Image image = null)
+        public async Task<bool> AddProduct(string productType, string productCategory, string productName, decimal productPrice,
+            string productColor, int productAmount, string productCharacteristic, string productDescription, Image productImage = null)
         {
-
+            if (await Task.Run(() => _tableProduct.AddProduct(productType, productCategory, productName, productPrice, productColor, productAmount, productCharacteristic, productDescription, productImage)))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
