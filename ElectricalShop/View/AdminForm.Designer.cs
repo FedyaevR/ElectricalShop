@@ -52,6 +52,7 @@ namespace ElectricalShop.View
             this.button_DeleteProduct.TabIndex = 1;
             this.button_DeleteProduct.Text = "Удалить продукт";
             this.button_DeleteProduct.UseVisualStyleBackColor = true;
+            this.button_DeleteProduct.Click += new System.EventHandler(this.button_DeleteProduct_Click);
             // 
             // button_UpdateProduct
             // 
@@ -61,6 +62,7 @@ namespace ElectricalShop.View
             this.button_UpdateProduct.TabIndex = 2;
             this.button_UpdateProduct.Text = "Редактировать продукт";
             this.button_UpdateProduct.UseVisualStyleBackColor = true;
+            this.button_UpdateProduct.Click += new System.EventHandler(this.button_UpdateProduct_Click);
             // 
             // AdminForm
             // 

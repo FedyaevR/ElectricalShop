@@ -29,21 +29,21 @@ namespace ElectricalShop.View
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridView_AllProduct = new System.Windows.Forms.DataGridView();
             this.button_UpdateData = new System.Windows.Forms.Button();
             this.button_CancelUpdate = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_AllProduct)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // dataGridView_AllProduct
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(13, 66);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(867, 519);
-            this.dataGridView1.TabIndex = 0;
+            this.dataGridView_AllProduct.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_AllProduct.Location = new System.Drawing.Point(13, 66);
+            this.dataGridView_AllProduct.Name = "dataGridView_AllProduct";
+            this.dataGridView_AllProduct.RowHeadersWidth = 51;
+            this.dataGridView_AllProduct.RowTemplate.Height = 24;
+            this.dataGridView_AllProduct.Size = new System.Drawing.Size(867, 519);
+            this.dataGridView_AllProduct.TabIndex = 0;
             // 
             // button_UpdateData
             // 
@@ -70,17 +70,18 @@ namespace ElectricalShop.View
             this.ClientSize = new System.Drawing.Size(892, 597);
             this.Controls.Add(this.button_CancelUpdate);
             this.Controls.Add(this.button_UpdateData);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dataGridView_AllProduct);
             this.Name = "UpdateProductForm";
             this.Text = "UpdateProductForm";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.Load += new System.EventHandler(this.UpdateProductForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_AllProduct)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridView_AllProduct;
         private System.Windows.Forms.Button button_UpdateData;
         private System.Windows.Forms.Button button_CancelUpdate;
     }

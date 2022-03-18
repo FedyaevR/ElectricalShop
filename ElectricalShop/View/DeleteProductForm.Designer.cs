@@ -29,10 +29,17 @@ namespace ElectricalShop.View
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // DeleteProductForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(637, 388);
+            this.Name = "DeleteProductForm";
             this.Text = "DeleteProductForm";
+            this.ResumeLayout(false);
+
         }
 
         #endregion

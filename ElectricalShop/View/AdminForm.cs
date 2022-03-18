@@ -30,5 +30,19 @@ namespace ElectricalShop.View
         {
             _loginForm.Visible = true;
         }
+
+        private void button_DeleteProduct_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+            DeleteProductForm deleteProductForm = new DeleteProductForm(this,_loginForm);
+            deleteProductForm.ShowDialog();
+        }
+
+        private void button_UpdateProduct_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+            UpdateProductForm updateProductForm = new UpdateProductForm(this, _loginForm);
+            updateProductForm.ShowDialog();
+        }
     }
 }

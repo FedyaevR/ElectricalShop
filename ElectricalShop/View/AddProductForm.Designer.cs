@@ -75,6 +75,7 @@ namespace ElectricalShop.View
             this.button_Cancel.TabIndex = 37;
             this.button_Cancel.Text = "Отмена";
             this.button_Cancel.UseVisualStyleBackColor = true;
+            this.button_Cancel.Click += new System.EventHandler(this.button_Cancel_Click);
             // 
             // pictureBox_ItemPicture
             // 

@@ -43,10 +43,23 @@ namespace ElectricalShop.Model
                                              select category.Category).ToList<string>());
             }
         }
+        /// <summary>
+        /// Метод добавления продукта в БД.
+        /// </summary>
+        /// <param name="productType">Тип продукта.</param>
+        /// <param name="productCategory">Категория продукта.</param>
+        /// <param name="productName">Имя продукта.</param>
+        /// <param name="productPrice">Стоимость продукта.</param>
+        /// <param name="productColor">Цвет продукта.</param>
+        /// <param name="productAmount">Количество продукта в наличии.</param>
+        /// <param name="productCharacteristic">Хар-ки продукта.</param>
+        /// <param name="productDescription">Описание продукта.</param>
+        /// <param name="productImage">Изображение продукта.(Может отсутсвовать)</param>
+        /// <returns>Метод возвращет true в случае успешного добавления продукта, false в случае если продукт в БД не добавлен.</returns>
         public async Task<bool> AddProduct(string productType, string productCategory, string productName, decimal productPrice,
             string productColor, int productAmount, string productCharacteristic, string productDescription, Image productImage = null)
         {
-            
+            ///Необходимо реализовать проверку есть ли продукт с таким названием в БД и если есть.
             if (productName.Length < 3 )
             {
                 throw new ArgumentException("Short product name");
@@ -63,34 +76,43 @@ namespace ElectricalShop.Model
             using (Product_DB db = new Product_DB())
             {
                 var productCategoryId = db.ProductCategory.FirstOrDefault(i => i.Category == productCategory).Id;
-                System.IO.MemoryStream memoryStream = new System.IO.MemoryStream();
                 byte[] image = { 1,2,3};
-                if (productImage.RawFormat.Equals(ImageFormat.Jpeg))
+                if (productImage != null)
                 {
-                    productImage.Save(memoryStream, ImageFormat.Jpeg);
-                    image = memoryStream.ToArray();
+                    System.IO.MemoryStream memoryStream = new System.IO.MemoryStream();
+                    if (productImage.RawFormat.Equals(ImageFormat.Jpeg))
+                    {
+                        productImage.Save(memoryStream, ImageFormat.Jpeg);
+                        image = memoryStream.ToArray();
+                    }
+                    else if (productImage.RawFormat.Equals(ImageFormat.Png))
+                    {
+                        productImage.Save(memoryStream, ImageFormat.Png);
+                        image = memoryStream.ToArray();
+                    }
+                    else if (productImage.RawFormat.Equals(ImageFormat.Bmp))
+                    {
+                        productImage.Save(memoryStream, ImageFormat.Bmp);
+                        image = memoryStream.ToArray();
+                    }
                 }
-                else if (productImage.RawFormat.Equals(ImageFormat.Png))
-                {
-                    productImage.Save(memoryStream, ImageFormat.Png);
-                    image = memoryStream.ToArray();
-                }
-                else if (productImage.RawFormat.Equals(ImageFormat.Bmp))
-                {
-                    productImage.Save(memoryStream, ImageFormat.Bmp);
-                    image = memoryStream.ToArray();
-                }
-               
-                
-               
                 await Task.Run(() => db.ProductItem.Add(new ProductItem() {ItemName = productName, ItemPrice = productPrice, ItemColor = productColor,
                 ItemAmount = productAmount, ItemCharacteristics = productCharacteristic, ItemDescription = productDescription, ItemImage = image, CategoryId = productCategoryId}));
                 var count = await db.SaveChangesAsync();
+                //count-это кол-во измененных обьектов, если count > 0, то добавление прошло успешно.
                 if (count > 0)
                 {
                     return true;
                 }
                 return false;
+            }
+        }
+        public async Task<List<ProductItem>> ShowDB()
+        {
+            using (Product_DB db = new Product_DB())
+            {
+                
+                return await Task.Run(() => db.ProductItem.ToList());
             }
         }
     }

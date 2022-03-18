@@ -37,6 +37,7 @@ namespace ElectricalShop.View
 
         private async void button_AddProduct_Click(object sender, EventArgs e)
         {
+            
             var type = comboBox_ProductType.SelectedItem.ToString();
             var category = comboBox_ProductCategory.SelectedItem.ToString();
             var itemName = textBox_ItemName.Text;
@@ -45,23 +46,44 @@ namespace ElectricalShop.View
             var itemAmount = (int)numericUpDown_CountAmount.Value;
             var itemCharacteristic = textBox_ItemCharacteristic.Text;
             var itemDescription = textBox_ItemDescription.Text;
-            if(await  Task.Run(()=>_adminController.AddProduct(type, category,itemName,itemPrice,itemColor,itemAmount,itemCharacteristic, itemDescription, _productImage)))
+            textBox_ItemName.BackColor = Color.White;
+            numericUpDown_ItemPrice.BackColor = Color.White;
+            numericUpDown_CountAmount.BackColor = Color.White;
+            try
             {
-                MessageBox.Show("Продукт добавлен!");
-                comboBox_ProductType.SelectedIndex = 0;
-                comboBox_ProductCategory.SelectedIndex = 0;
-                textBox_ItemName.Text = "";
-                numericUpDown_ItemPrice.Value = 0;
-                textBox_ItemColor.Text = "";
-                numericUpDown_CountAmount.Value = 0;
-                textBox_ItemCharacteristic.Text = "";
-                textBox_ItemDescription.Text = "";
+                if (await Task.Run(() => _adminController.AddProduct(type, category, itemName, itemPrice, itemColor, itemAmount, itemCharacteristic, itemDescription, _productImage)))
+                {
+                    MessageBox.Show("Продукт добавлен!");
+                    comboBox_ProductType.SelectedIndex = 0;
+                    comboBox_ProductCategory.SelectedIndex = 0;
+                    textBox_ItemName.Text = "";
+                    numericUpDown_ItemPrice.Value = 0;
+                    textBox_ItemColor.Text = "";
+                    numericUpDown_CountAmount.Value = 0;
+                    textBox_ItemCharacteristic.Text = "";
+                    textBox_ItemDescription.Text = "";
+                }
+                else
+                {
+                    MessageBox.Show("Продукт не добавлен!");
+                }
             }
-            else
+            catch (ArgumentException ex)
             {
-                MessageBox.Show("Продукт не добавлен!");
+
+                if (ex.Message == "Short product name")
+                {
+                    textBox_ItemName.BackColor = Color.Red;
+                }
+                if (ex.Message == "Price can't be negative")
+                {
+                    numericUpDown_ItemPrice.BackColor = Color.Red;
+                }
+                if (ex.Message == "Amount of product can't be less than one")
+                {
+                    numericUpDown_CountAmount.BackColor = Color.Red;
+                }
             }
-           
         }
 
         private async void AddProductForm_Load(object sender, EventArgs e)
@@ -90,12 +112,13 @@ namespace ElectricalShop.View
             {
                 _productImage = Image.FromFile(openFileDialog_AddImage.FileName);
                 pictureBox_ItemPicture.Image = _productImage;
-                if (_productImage.RawFormat.Equals(ImageFormat.Png))
-                {
-                    MessageBox.Show("Победа");
-                }
             }
+        }
 
+        private void button_Cancel_Click(object sender, EventArgs e)
+        {
+            _productImage = null;
+            pictureBox_ItemPicture.Image = null;
         }
     }
 }

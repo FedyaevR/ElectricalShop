@@ -12,7 +12,7 @@ namespace ElectricalShop.View
 {
     public partial class DeleteProductForm : Form
     {
-        public DeleteProductForm()
+        public DeleteProductForm(Form adminForm, Form loginForm)
         {
             InitializeComponent();
         }
