@@ -13,6 +13,7 @@ namespace ElectricalShop.Controller
     class AdminController
     {
         TableProduct _tableProduct = new TableProduct();
+        DataGridView _dataGridView;
         public async Task<List<string>> LoadProductType()
         {
             return await _tableProduct.ShowProductType();
@@ -45,15 +46,17 @@ namespace ElectricalShop.Controller
             return false;
         }
 
-        public async Task<bool> ShowProduct(DataGridView dataGridView)
+        public async Task<bool> ShowAllProduct(DataGridView dataGridView)
         {
-
-          
-            dataGridView.DataSource =  await _tableProduct.ShowDB();
-            dataGridView.Columns.RemoveAt(5);
-          
-           
-           
+            _dataGridView = dataGridView;
+            _dataGridView.DataSource =  await _tableProduct.ShowAllDB();
+            _dataGridView.Columns.RemoveAt(9);
+            return true;
+        }
+        public async Task<bool> ShowProductAtCategory(string type, string category)
+        {
+            _dataGridView.DataSource = await _tableProduct.ShowProductAtCategory(type,category);
+            _dataGridView.Columns.RemoveAt(9);
             return true;
         }
     }

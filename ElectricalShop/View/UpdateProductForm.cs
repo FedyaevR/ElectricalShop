@@ -21,8 +21,27 @@ namespace ElectricalShop.View
 
         private async void UpdateProductForm_Load(object sender, EventArgs e)
         {
-            await  _adminController.ShowProduct(dataGridView_AllProduct);
+           await _adminController.ShowAllProduct(dataGridView_AllProduct);
+            var resultType = await _adminController.LoadProductType();
+            comboBox_ProductType.Items.AddRange(resultType.ToArray());
+            comboBox_ProductType.SelectedIndex = 0;
+
+            var resultCategory = await _adminController.LoadProductCategory(comboBox_ProductType.SelectedItem.ToString());
+            comboBox_ProductCategory.Items.Clear();
+            comboBox_ProductCategory.Items.AddRange(resultCategory.ToArray());
+        }
+
+        private async void comboBox_ProductType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comboBox_ProductCategory.Items.Clear();
+            var resultCategory = await _adminController.LoadProductCategory(comboBox_ProductType.SelectedItem.ToString());
+            comboBox_ProductCategory.Items.AddRange(resultCategory.ToArray());
             
+        }
+
+        private async void comboBox_ProductCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            await _adminController.ShowProductAtCategory(comboBox_ProductType.Text, comboBox_ProductCategory.Text);
         }
     }
 }

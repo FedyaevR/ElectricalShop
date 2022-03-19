@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -107,12 +108,20 @@ namespace ElectricalShop.Model
                 return false;
             }
         }
-        public async Task<List<ProductItem>> ShowDB()
+        public async Task<List<ProductItem>> ShowAllDB()
         {
             using (Product_DB db = new Product_DB())
             {
-                
                 return await Task.Run(() => db.ProductItem.ToList());
+            }
+        }
+        public async Task<List<ProductItem>> ShowProductAtCategory(string type, string category)
+        {
+            using (Product_DB db = new Product_DB())
+            {
+                return await Task.Run(() => (from item in db.ProductItem
+                       where item.ProductCategory.ProductType.Type == type && item.ProductCategory.Category == category
+                       select item).ToList<ProductItem>());
             }
         }
     }
