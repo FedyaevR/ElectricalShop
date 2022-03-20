@@ -30,10 +30,9 @@ namespace ElectricalShop.View
         private void InitializeComponent()
         {
             this.dataGridView_AllProduct = new System.Windows.Forms.DataGridView();
-            this.button_UpdateData = new System.Windows.Forms.Button();
-            this.button_CancelUpdate = new System.Windows.Forms.Button();
             this.comboBox_ProductType = new System.Windows.Forms.ComboBox();
             this.comboBox_ProductCategory = new System.Windows.Forms.ComboBox();
+            this.openFileDialog_UpdateImage = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_AllProduct)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,24 +45,6 @@ namespace ElectricalShop.View
             this.dataGridView_AllProduct.RowTemplate.Height = 24;
             this.dataGridView_AllProduct.Size = new System.Drawing.Size(867, 519);
             this.dataGridView_AllProduct.TabIndex = 0;
-            // 
-            // button_UpdateData
-            // 
-            this.button_UpdateData.Location = new System.Drawing.Point(516, 24);
-            this.button_UpdateData.Name = "button_UpdateData";
-            this.button_UpdateData.Size = new System.Drawing.Size(179, 36);
-            this.button_UpdateData.TabIndex = 1;
-            this.button_UpdateData.Text = "Сохранить изменения";
-            this.button_UpdateData.UseVisualStyleBackColor = true;
-            // 
-            // button_CancelUpdate
-            // 
-            this.button_CancelUpdate.Location = new System.Drawing.Point(701, 24);
-            this.button_CancelUpdate.Name = "button_CancelUpdate";
-            this.button_CancelUpdate.Size = new System.Drawing.Size(179, 36);
-            this.button_CancelUpdate.TabIndex = 2;
-            this.button_CancelUpdate.Text = "Отмена";
-            this.button_CancelUpdate.UseVisualStyleBackColor = true;
             // 
             // comboBox_ProductType
             // 
@@ -85,6 +66,10 @@ namespace ElectricalShop.View
             this.comboBox_ProductCategory.TabIndex = 4;
             this.comboBox_ProductCategory.SelectedIndexChanged += new System.EventHandler(this.comboBox_ProductCategory_SelectedIndexChanged);
             // 
+            // openFileDialog_UpdateImage
+            // 
+            this.openFileDialog_UpdateImage.FileName = "openFileDialog1";
+            // 
             // UpdateProductForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -92,8 +77,6 @@ namespace ElectricalShop.View
             this.ClientSize = new System.Drawing.Size(892, 597);
             this.Controls.Add(this.comboBox_ProductCategory);
             this.Controls.Add(this.comboBox_ProductType);
-            this.Controls.Add(this.button_CancelUpdate);
-            this.Controls.Add(this.button_UpdateData);
             this.Controls.Add(this.dataGridView_AllProduct);
             this.Name = "UpdateProductForm";
             this.Text = "UpdateProductForm";
@@ -106,9 +89,8 @@ namespace ElectricalShop.View
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView_AllProduct;
-        private System.Windows.Forms.Button button_UpdateData;
-        private System.Windows.Forms.Button button_CancelUpdate;
         private System.Windows.Forms.ComboBox comboBox_ProductType;
         private System.Windows.Forms.ComboBox comboBox_ProductCategory;
+        private System.Windows.Forms.OpenFileDialog openFileDialog_UpdateImage;
     }
 }

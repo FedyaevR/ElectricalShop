@@ -124,5 +124,73 @@ namespace ElectricalShop.Model
                        select item).ToList<ProductItem>());
             }
         }
+
+        public async Task<bool> UpdateProduct(int itemId ,string productName, decimal productPrice,
+            string productColor, int productAmount, string productCharacteristic, string productDescription,byte[] oldImage ,Image productImage = null)
+        {
+            if (productName.Length < 3)
+            {
+                throw new ArgumentException("Short product name");
+            }
+            if (productPrice < 0)
+            {
+                throw new ArgumentException("Price can't be negative");
+            }
+            if (productAmount < 1)
+            {
+                throw new ArgumentException("Amount of product can't be less than one");
+            }
+            using (Product_DB db = new Product_DB())
+            {
+                
+               
+                var product = await Task.Run(() => db.ProductItem.FirstOrDefault(i => i.ItemId == itemId));
+                if (oldImage != null)
+                {
+                    byte[] image = { 1, 2, 3 };
+                    if (productImage != null)
+                    {
+                        System.IO.MemoryStream memoryStream = new System.IO.MemoryStream();
+                        if (productImage.RawFormat.Equals(ImageFormat.Jpeg))
+                        {
+                            productImage.Save(memoryStream, ImageFormat.Jpeg);
+                            image = memoryStream.ToArray();
+                        }
+                        else if (productImage.RawFormat.Equals(ImageFormat.Png))
+                        {
+                            productImage.Save(memoryStream, ImageFormat.Png);
+                            image = memoryStream.ToArray();
+                        }
+                        else if (productImage.RawFormat.Equals(ImageFormat.Bmp))
+                        {
+                            productImage.Save(memoryStream, ImageFormat.Bmp);
+                            image = memoryStream.ToArray();
+                        }
+                        product.ItemImage = image;
+                    }
+                   
+                }
+                product.ItemName = product.ItemName;
+                product.ItemPrice = productPrice;
+                product.ItemDescription = productDescription;
+                product.ItemAmount = productAmount;
+                product.ItemColor = productColor;
+                product.ItemCharacteristics = productCharacteristic;
+                product.ItemImage = oldImage;
+
+
+                int count = await db.SaveChangesAsync();
+                if (count > 0 )
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                
+            }
+           
+        }
     }
 }

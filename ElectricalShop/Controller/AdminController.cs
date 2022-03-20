@@ -59,5 +59,18 @@ namespace ElectricalShop.Controller
             _dataGridView.Columns.RemoveAt(9);
             return true;
         }
+        public async Task<bool> UpdateProduct(int itemId, string productName, decimal productPrice,
+            string productColor, int productAmount, string productCharacteristic, string productDescription,byte[] oldImage, Image productImage = null)
+        {
+            if (await _tableProduct.UpdateProduct(itemId, productName, productPrice, productColor,
+                productAmount,productCharacteristic, productDescription, oldImage, productImage))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

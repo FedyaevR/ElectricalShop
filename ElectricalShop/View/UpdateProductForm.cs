@@ -14,9 +14,36 @@ namespace ElectricalShop.View
     public partial class UpdateProductForm : Form
     {
         AdminController _adminController = new AdminController();
+        Image _productImage;
+
         public UpdateProductForm(Form adminForm, Form loginForm)
         {
             InitializeComponent();
+            dataGridView_AllProduct.CellClick += DataGridView_AllProduct_CellClick;
+            dataGridView_AllProduct.CellValueChanged += DataGridView_AllProduct_CellValueChanged;
+        }
+
+        private async void DataGridView_AllProduct_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            var res = dataGridView_AllProduct.Rows[dataGridView_AllProduct.SelectedCells[0].RowIndex];
+            await _adminController.UpdateProduct((int)res.Cells[1].Value, res.Cells[2].Value.ToString(), (decimal)res.Cells[3].Value,
+            res.Cells[7].Value.ToString(), (int)res.Cells[8].Value, res.Cells[5].Value.ToString(), res.Cells[6].Value.ToString(), (byte[])res.Cells[4].Value,_productImage);
+            
+        }
+
+        private void DataGridView_AllProduct_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            byte[] byteArray = { };
+            if (dataGridView_AllProduct.SelectedCells[0].ValueType == byteArray.GetType())
+            {
+                openFileDialog_UpdateImage.FileName = "";
+                openFileDialog_UpdateImage.Filter = "jpeg|*.jpg|png|*.png|bmp|*.bmp";
+                if (DialogResult.OK == openFileDialog_UpdateImage.ShowDialog())
+                {
+                    _productImage = Image.FromFile(openFileDialog_UpdateImage.FileName);
+                }
+            }
+         
         }
 
         private async void UpdateProductForm_Load(object sender, EventArgs e)
@@ -43,5 +70,6 @@ namespace ElectricalShop.View
         {
             await _adminController.ShowProductAtCategory(comboBox_ProductType.Text, comboBox_ProductCategory.Text);
         }
+
     }
 }
