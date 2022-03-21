@@ -30,13 +30,12 @@ namespace ElectricalShop.View
         private void InitializeComponent()
         {
             this.button_AddProduct = new System.Windows.Forms.Button();
-            this.button_DeleteProduct = new System.Windows.Forms.Button();
             this.button_UpdateProduct = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button_AddProduct
             // 
-            this.button_AddProduct.Location = new System.Drawing.Point(12, 12);
+            this.button_AddProduct.Location = new System.Drawing.Point(12, 57);
             this.button_AddProduct.Name = "button_AddProduct";
             this.button_AddProduct.Size = new System.Drawing.Size(277, 69);
             this.button_AddProduct.TabIndex = 0;
@@ -44,19 +43,9 @@ namespace ElectricalShop.View
             this.button_AddProduct.UseVisualStyleBackColor = true;
             this.button_AddProduct.Click += new System.EventHandler(this.button_AddProduct_Click);
             // 
-            // button_DeleteProduct
-            // 
-            this.button_DeleteProduct.Location = new System.Drawing.Point(12, 124);
-            this.button_DeleteProduct.Name = "button_DeleteProduct";
-            this.button_DeleteProduct.Size = new System.Drawing.Size(277, 69);
-            this.button_DeleteProduct.TabIndex = 1;
-            this.button_DeleteProduct.Text = "Удалить продукт";
-            this.button_DeleteProduct.UseVisualStyleBackColor = true;
-            this.button_DeleteProduct.Click += new System.EventHandler(this.button_DeleteProduct_Click);
-            // 
             // button_UpdateProduct
             // 
-            this.button_UpdateProduct.Location = new System.Drawing.Point(12, 240);
+            this.button_UpdateProduct.Location = new System.Drawing.Point(12, 188);
             this.button_UpdateProduct.Name = "button_UpdateProduct";
             this.button_UpdateProduct.Size = new System.Drawing.Size(277, 69);
             this.button_UpdateProduct.TabIndex = 2;
@@ -70,7 +59,6 @@ namespace ElectricalShop.View
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(301, 321);
             this.Controls.Add(this.button_UpdateProduct);
-            this.Controls.Add(this.button_DeleteProduct);
             this.Controls.Add(this.button_AddProduct);
             this.Name = "AdminForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -83,7 +71,6 @@ namespace ElectricalShop.View
         #endregion
 
         private System.Windows.Forms.Button button_AddProduct;
-        private System.Windows.Forms.Button button_DeleteProduct;
         private System.Windows.Forms.Button button_UpdateProduct;
     }
 }

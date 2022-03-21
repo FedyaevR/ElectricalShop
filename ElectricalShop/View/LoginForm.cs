@@ -37,7 +37,7 @@ namespace ElectricalShop.View
 
         private async void button_Enter_Click(object sender, EventArgs e)
         {
-            await tableProduct.ShowProduct(1, 1);
+            //await tableProduct.ShowProduct(1, 1);
             this.Visible = false;
             if (await _userController.Enter(textBox_Login.Text, textBox_Password.Text) == "Пользователь")
             {

@@ -12,22 +12,7 @@ namespace ElectricalShop.Model
 {
     class TableProduct
     {
-       
-        public async Task<List<ProductItem>> ShowProduct(int category, int type)
-        {
-            using (Product_DB db = new Product_DB())
-            {
-                var Type = await db.ProductType.FindAsync(type);
-                var Category = await db.ProductCategory.FindAsync(category);
-                var list = await Task.Run(()=>db.ProductItem.Where(i => i.ProductCategory.ProductType.Id == type && i.ProductCategory.CategoryId == category));
-                foreach (var item in list)
-                {
-                    await Task.Run(() => MessageBox.Show(item.ItemName + Environment.NewLine));
-                }
-                return list as List<ProductItem>;
-            }
-        }
-        public async Task<List<string>> ShowProductType()
+        public async Task<List<string>> ShowProductTypeAsync()
         {
             using (Product_DB db = new Product_DB())
             {
@@ -35,7 +20,7 @@ namespace ElectricalShop.Model
                                                         select row.Type).ToList<string>());
             }
         }
-        public async Task<List<string>> ShowProductCategory(string type)
+        public async Task<List<string>> ShowProductCategoryAsync(string type)
         {
             using (Product_DB db = new Product_DB())
             {
@@ -61,41 +46,16 @@ namespace ElectricalShop.Model
             string productColor, int productAmount, string productCharacteristic, string productDescription, Image productImage = null)
         {
             ///Необходимо реализовать проверку есть ли продукт с таким названием в БД и если есть.
-            if (productName.Length < 3 )
-            {
-                throw new ArgumentException("Short product name");
-            }
-            if (productPrice < 0)
-            {
-                throw new ArgumentException("Price can't be negative");
-            }
-            if (productAmount < 1)
-            {
-                throw new ArgumentException("Amount of product can't be less than one");
-            }
-            
+            CheckInputData(productName, productPrice, productAmount);
+
             using (Product_DB db = new Product_DB())
             {
                 var productCategoryId = db.ProductCategory.FirstOrDefault(i => i.Category == productCategory).Id;
                 byte[] image = { 1,2,3};
+               
                 if (productImage != null)
                 {
-                    System.IO.MemoryStream memoryStream = new System.IO.MemoryStream();
-                    if (productImage.RawFormat.Equals(ImageFormat.Jpeg))
-                    {
-                        productImage.Save(memoryStream, ImageFormat.Jpeg);
-                        image = memoryStream.ToArray();
-                    }
-                    else if (productImage.RawFormat.Equals(ImageFormat.Png))
-                    {
-                        productImage.Save(memoryStream, ImageFormat.Png);
-                        image = memoryStream.ToArray();
-                    }
-                    else if (productImage.RawFormat.Equals(ImageFormat.Bmp))
-                    {
-                        productImage.Save(memoryStream, ImageFormat.Bmp);
-                        image = memoryStream.ToArray();
-                    }
+                    ImageConverter(ref image, productImage);
                 }
                 await Task.Run(() => db.ProductItem.Add(new ProductItem() {ItemName = productName, ItemPrice = productPrice, ItemColor = productColor,
                 ItemAmount = productAmount, ItemCharacteristics = productCharacteristic, ItemDescription = productDescription, ItemImage = image, CategoryId = productCategoryId}));
@@ -107,6 +67,42 @@ namespace ElectricalShop.Model
                 }
                 return false;
             }
+        }
+        private void CheckInputData(string productName, decimal productPrice, int productAmount)
+        {
+            if (productName.Length < 3)
+            {
+                throw new ArgumentException("Short product name");
+            }
+            if (productPrice < 0)
+            {
+                throw new ArgumentException("Price can't be negative");
+            }
+            if (productAmount < 1)
+            {
+                throw new ArgumentException("Amount of product can't be less than one");
+            }
+        }
+        private void ImageConverter(ref byte[] image, Image productImage)
+        {
+           
+            System.IO.MemoryStream memoryStream = new System.IO.MemoryStream();
+            if (productImage.RawFormat.Equals(ImageFormat.Jpeg))
+            {
+                productImage.Save(memoryStream, ImageFormat.Jpeg);
+                image = memoryStream.ToArray();
+            }
+            else if (productImage.RawFormat.Equals(ImageFormat.Png))
+            {
+                productImage.Save(memoryStream, ImageFormat.Png);
+                image = memoryStream.ToArray();
+            }
+            else if (productImage.RawFormat.Equals(ImageFormat.Bmp))
+            {
+                productImage.Save(memoryStream, ImageFormat.Bmp);
+                image = memoryStream.ToArray();
+            }
+        
         }
         public async Task<List<ProductItem>> ShowAllDB()
         {
@@ -128,18 +124,7 @@ namespace ElectricalShop.Model
         public async Task<bool> UpdateProduct(int itemId ,string productName, decimal productPrice,
             string productColor, int productAmount, string productCharacteristic, string productDescription,byte[] oldImage ,Image productImage = null)
         {
-            if (productName.Length < 3)
-            {
-                throw new ArgumentException("Short product name");
-            }
-            if (productPrice < 0)
-            {
-                throw new ArgumentException("Price can't be negative");
-            }
-            if (productAmount < 1)
-            {
-                throw new ArgumentException("Amount of product can't be less than one");
-            }
+            CheckInputData(productName, productPrice, productAmount);
             using (Product_DB db = new Product_DB())
             {
                 
@@ -150,23 +135,7 @@ namespace ElectricalShop.Model
                     byte[] image = { 1, 2, 3 };
                     if (productImage != null)
                     {
-                        System.IO.MemoryStream memoryStream = new System.IO.MemoryStream();
-                        if (productImage.RawFormat.Equals(ImageFormat.Jpeg))
-                        {
-                            productImage.Save(memoryStream, ImageFormat.Jpeg);
-                            image = memoryStream.ToArray();
-                        }
-                        else if (productImage.RawFormat.Equals(ImageFormat.Png))
-                        {
-                            productImage.Save(memoryStream, ImageFormat.Png);
-                            image = memoryStream.ToArray();
-                        }
-                        else if (productImage.RawFormat.Equals(ImageFormat.Bmp))
-                        {
-                            productImage.Save(memoryStream, ImageFormat.Bmp);
-                            image = memoryStream.ToArray();
-                        }
-                        product.ItemImage = image;
+                        ImageConverter(ref image, productImage);
                     }
                    
                 }
@@ -177,7 +146,6 @@ namespace ElectricalShop.Model
                 product.ItemColor = productColor;
                 product.ItemCharacteristics = productCharacteristic;
                 product.ItemImage = oldImage;
-
 
                 int count = await db.SaveChangesAsync();
                 if (count > 0 )
@@ -192,5 +160,22 @@ namespace ElectricalShop.Model
             }
            
         }
+        public async Task<bool> DeleteProductAsync(int itemId)
+        {
+            using (Product_DB db = new Product_DB())
+            {
+                await Task.Run(()=>db.ProductItem.Remove(db.ProductItem.FirstOrDefault(p => p.ItemId == itemId)));
+                int count = await db.SaveChangesAsync();
+                if (count>0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        } 
+
     }
 }

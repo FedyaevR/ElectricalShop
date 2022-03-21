@@ -33,6 +33,7 @@ namespace ElectricalShop.View
             this.comboBox_ProductType = new System.Windows.Forms.ComboBox();
             this.comboBox_ProductCategory = new System.Windows.Forms.ComboBox();
             this.openFileDialog_UpdateImage = new System.Windows.Forms.OpenFileDialog();
+            this.button_DeleteProduct = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_AllProduct)).BeginInit();
             this.SuspendLayout();
             // 
@@ -70,11 +71,22 @@ namespace ElectricalShop.View
             // 
             this.openFileDialog_UpdateImage.FileName = "openFileDialog1";
             // 
+            // button_DeleteProduct
+            // 
+            this.button_DeleteProduct.Location = new System.Drawing.Point(709, 36);
+            this.button_DeleteProduct.Name = "button_DeleteProduct";
+            this.button_DeleteProduct.Size = new System.Drawing.Size(171, 24);
+            this.button_DeleteProduct.TabIndex = 5;
+            this.button_DeleteProduct.Text = "Удалить продукт";
+            this.button_DeleteProduct.UseVisualStyleBackColor = true;
+            this.button_DeleteProduct.Click += new System.EventHandler(this.button_DeleteProduct_Click);
+            // 
             // UpdateProductForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(892, 597);
+            this.Controls.Add(this.button_DeleteProduct);
             this.Controls.Add(this.comboBox_ProductCategory);
             this.Controls.Add(this.comboBox_ProductType);
             this.Controls.Add(this.dataGridView_AllProduct);
@@ -92,5 +104,6 @@ namespace ElectricalShop.View
         private System.Windows.Forms.ComboBox comboBox_ProductType;
         private System.Windows.Forms.ComboBox comboBox_ProductCategory;
         private System.Windows.Forms.OpenFileDialog openFileDialog_UpdateImage;
+        private System.Windows.Forms.Button button_DeleteProduct;
     }
 }

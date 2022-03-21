@@ -62,6 +62,7 @@ namespace ElectricalShop.View
                     numericUpDown_CountAmount.Value = 0;
                     textBox_ItemCharacteristic.Text = "";
                     textBox_ItemDescription.Text = "";
+                    pictureBox_ItemPicture.Image = null;
                 }
                 else
                 {
@@ -88,11 +89,11 @@ namespace ElectricalShop.View
 
         private async void AddProductForm_Load(object sender, EventArgs e)
         {
-            var resultType = await _adminController.LoadProductType();
+            var resultType = await _adminController.LoadProductTypeAsync();
             comboBox_ProductType.Items.AddRange(resultType.ToArray());
             comboBox_ProductType.SelectedIndex = 0;
             
-            var resultCategory = await _adminController.LoadProductCategory(comboBox_ProductType.SelectedItem.ToString());
+            var resultCategory = await _adminController.LoadProductCategoryAsync(comboBox_ProductType.SelectedItem.ToString());
             comboBox_ProductCategory.Items.Clear();
             comboBox_ProductCategory.Items.AddRange(resultCategory.ToArray());
         }
@@ -100,14 +101,14 @@ namespace ElectricalShop.View
         private async void comboBox_ProductType_SelectedIndexChanged(object sender, EventArgs e)
         {
             comboBox_ProductCategory.Items.Clear();
-            var resultCategory = await _adminController.LoadProductCategory(comboBox_ProductType.SelectedItem.ToString());
+            var resultCategory = await _adminController.LoadProductCategoryAsync(comboBox_ProductType.SelectedItem.ToString());
             comboBox_ProductCategory.Items.AddRange(resultCategory.ToArray());
         }
 
         private void button_AddItemPicture_Click(object sender, EventArgs e)
         {
             openFileDialog_AddImage.FileName = "";
-            openFileDialog_AddImage.Filter = "jpeg|*.jpg|png|*.png|bmp|*.bmp";
+            openFileDialog_AddImage.Filter = "jpeg|*.jpeg|png|*.png|bmp|*.bmp";
             if (DialogResult.OK == openFileDialog_AddImage.ShowDialog())
             {
                 _productImage = Image.FromFile(openFileDialog_AddImage.FileName);

@@ -14,14 +14,14 @@ namespace ElectricalShop.Controller
     {
         TableProduct _tableProduct = new TableProduct();
         DataGridView _dataGridView;
-        public async Task<List<string>> LoadProductType()
+        public async Task<List<string>> LoadProductTypeAsync()
         {
-            return await _tableProduct.ShowProductType();
+            return await _tableProduct.ShowProductTypeAsync();
 
         }
-        public async Task<List<string>> LoadProductCategory(string type)
+        public async Task<List<string>> LoadProductCategoryAsync(string type)
         {
-            return await _tableProduct.ShowProductCategory(type);
+            return await _tableProduct.ShowProductCategoryAsync(type);
         }
         /// <summary>
         /// Метод обращается к методу класса TableProduct для добавления продукта в БД.
@@ -64,6 +64,17 @@ namespace ElectricalShop.Controller
         {
             if (await _tableProduct.UpdateProduct(itemId, productName, productPrice, productColor,
                 productAmount,productCharacteristic, productDescription, oldImage, productImage))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public async Task<bool> DeleteProductAsync(int itemId)
+        {
+            if (await _tableProduct.DeleteProductAsync(itemId) == true)
             {
                 return true;
             }
