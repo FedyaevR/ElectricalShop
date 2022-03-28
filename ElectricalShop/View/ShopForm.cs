@@ -18,9 +18,11 @@ namespace ElectricalShop.View
         {
             InitializeComponent();
             _loginForm = loginForm;
-           
+            this.comboBox_ProductType.SelectedIndexChanged += ComboBox_ProductType_SelectedIndexChanged1;
+          
         }
 
+    
         private async void ShopForm_Load(object sender, EventArgs e)
         {
             var resultType = await _shopController.LoadProductTypeAsync();
@@ -30,14 +32,25 @@ namespace ElectricalShop.View
             var resultCategory = await _shopController.LoadProductCategoryAsync(comboBox_ProductType.SelectedItem.ToString());
             comboBox_ProductCategory.Items.Clear();
             comboBox_ProductCategory.Items.AddRange(resultCategory.ToArray());
-
             await _shopController.ShowAllProductAsync(listView);
+
         }
-        private async void ComboBox_ProductCategory_SelectedIndexChanged(object sender, EventArgs e)
+        private async void ComboBox_ProductType_SelectedIndexChanged1(object sender, EventArgs e)
         {
             comboBox_ProductCategory.Items.Clear();
             var resultCategory = await _shopController.LoadProductCategoryAsync(comboBox_ProductType.SelectedItem.ToString());
             comboBox_ProductCategory.Items.AddRange(resultCategory.ToArray());
+        }
+
+        private void ShopForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _loginForm.Close();
+        }
+
+        private async void comboBox_ProductCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            listView.Items.Clear();
+            await _shopController.ShowProductAtCategory(listView, comboBox_ProductType.SelectedItem.ToString(),comboBox_ProductCategory.SelectedItem.ToString());
         }
     }
 }

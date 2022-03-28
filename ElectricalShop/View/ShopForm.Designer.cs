@@ -72,6 +72,7 @@ namespace ElectricalShop.View
             this.comboBox_ProductCategory.Name = "comboBox_ProductCategory";
             this.comboBox_ProductCategory.Size = new System.Drawing.Size(175, 24);
             this.comboBox_ProductCategory.TabIndex = 3;
+            this.comboBox_ProductCategory.SelectedIndexChanged += new System.EventHandler(this.comboBox_ProductCategory_SelectedIndexChanged);
             // 
             // comboBox_ProductType
             // 
@@ -116,6 +117,7 @@ namespace ElectricalShop.View
             this.Name = "ShopForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ShopForm";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ShopForm_FormClosed);
             this.Load += new System.EventHandler(this.ShopForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

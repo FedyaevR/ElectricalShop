@@ -21,6 +21,7 @@ namespace ElectricalShop.View
             InitializeComponent();
             dataGridView_AllProduct.CellClick += DataGridView_AllProduct_CellClick;
             dataGridView_AllProduct.CellValueChanged += DataGridView_AllProduct_CellValueChanged;
+           
         }
 
         private async void DataGridView_AllProduct_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -31,7 +32,7 @@ namespace ElectricalShop.View
             
         }
 
-        private void DataGridView_AllProduct_CellClick(object sender, DataGridViewCellEventArgs e)
+        private async void DataGridView_AllProduct_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             byte[] byteArray = { };
             if (dataGridView_AllProduct.SelectedCells[0].ValueType == byteArray.GetType())
@@ -41,7 +42,11 @@ namespace ElectricalShop.View
                 if (DialogResult.OK == openFileDialog_UpdateImage.ShowDialog())
                 {
                     _productImage = Image.FromFile(openFileDialog_UpdateImage.FileName);
+                    var res = dataGridView_AllProduct.Rows[dataGridView_AllProduct.SelectedCells[0].RowIndex];
+                    await _adminController.UpdateProduct((int)res.Cells[1].Value, res.Cells[2].Value.ToString(), (decimal)res.Cells[3].Value,
+                    res.Cells[7].Value.ToString(), (int)res.Cells[8].Value, res.Cells[5].Value.ToString(), res.Cells[6].Value.ToString(), (byte[])res.Cells[4].Value, _productImage);
                 }
+
             }
          
         }

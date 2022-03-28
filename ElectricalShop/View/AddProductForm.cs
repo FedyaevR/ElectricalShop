@@ -111,6 +111,7 @@ namespace ElectricalShop.View
             openFileDialog_AddImage.Filter = "jpeg|*.jpeg|png|*.png|bmp|*.bmp";
             if (DialogResult.OK == openFileDialog_AddImage.ShowDialog())
             {
+                
                 _productImage = Image.FromFile(openFileDialog_AddImage.FileName);
                 pictureBox_ItemPicture.Image = _productImage;
             }

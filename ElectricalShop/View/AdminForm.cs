@@ -44,5 +44,7 @@ namespace ElectricalShop.View
             UpdateProductForm updateProductForm = new UpdateProductForm(this, _loginForm);
             updateProductForm.ShowDialog();
         }
+
+
     }
 }

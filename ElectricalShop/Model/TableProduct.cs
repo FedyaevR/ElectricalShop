@@ -136,6 +136,7 @@ namespace ElectricalShop.Model
                     if (productImage != null)
                     {
                         ImageConverter(ref image, productImage);
+                        oldImage = image;
                     }
                    
                 }
@@ -176,6 +177,17 @@ namespace ElectricalShop.Model
                 }
             }
         } 
+
+        public async Task<Bitmap> ShowImage()
+        {
+            using (Product_DB db = new Product_DB())
+            {
+                var res = await Task.Run(() => db.ProductItem.FirstOrDefault(i => i.ItemId == 2).ItemImage);
+                System.IO.MemoryStream memoryStream = new System.IO.MemoryStream(res);
+                Bitmap image = await Task.Run(() => (Bitmap)Image.FromStream(memoryStream));
+                return image;
+            }
+        }
 
     }
 }
