@@ -101,6 +101,7 @@ namespace ElectricalShop.View
             0,
             0,
             0});
+            this.numericUpDown_Amount.ValueChanged += new System.EventHandler(this.numericUpDown_Amount_ValueChanged);
             // 
             // label_Amount
             // 

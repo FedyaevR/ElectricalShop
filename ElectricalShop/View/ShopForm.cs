@@ -97,6 +97,7 @@ namespace ElectricalShop.View
 
         private void button_AddProductInBasket_Click(object sender, EventArgs e)
         {
+            if (treeView.SelectedNode == null) return;
             _listBoxProductAtCart.Items.Add(treeView.SelectedNode.Text);
         }
 
