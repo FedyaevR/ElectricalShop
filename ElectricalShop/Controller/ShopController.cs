@@ -21,40 +21,37 @@ namespace ElectricalShop.Controller
         {
             return await _tableProduct.ShowProductCategoryAsync(type);
         }
-        
-        public  async Task<bool> ShowAllProductAsync(ListView listView)
-        {
-            var res =  await _tableProduct.ShowAllDB();
-            ImageList imageList = new ImageList();
-            imageList.ImageSize = new Size(30, 30);
-            var imageByte = await Task.Run(()=>(from image in res
-                             select image.ItemImage).ToList());
 
-            foreach (var item in imageByte)
+        //ListView listView
+        public  async Task<bool> ShowAllProductAsync( TreeView treeView)
+        {
+            var productItems =  await _tableProduct.ShowAllDB();
+           
+            treeView.ImageList = await ImageListCreate(productItems);
+
+            for (int i = 0; i < productItems.Count; i++)
             {
-                System.IO.MemoryStream memoryStream = new System.IO.MemoryStream(item);
-                Bitmap image = await Task.Run(()=>(Bitmap)Image.FromStream(memoryStream));
-                await Task.Run(()=>imageList.Images.Add(image));
+                string text = (productItems[i].ItemName + " " + Math.Round(productItems[i].ItemPrice.Value, 2) + " р. Кол-во на складе:" + productItems[i].ItemAmount).ToString();
+                TreeNode treeNode = new TreeNode(text, i,i);
+                treeView.Nodes.Add(treeNode);
             }
-            listView.SmallImageList = imageList;
-            listView.LargeImageList = imageList;
-            
-            for (int i = 0; i < res.Count; i++)
-            {
-                ListViewItem listViewItem = new ListViewItem(new string[] {res[i].ItemName + " "+ res[i].ItemPrice.ToString() });
-                listViewItem.ImageIndex = i;
-                listView.Items.Add(listViewItem);
-            }
-            
+
+            //listView.SmallImageList = imageList;
+            //listView.LargeImageList = imageList;
+            //for (int i = 0; i < res.Count; i++)
+            //{
+            //    ListViewItem listViewItem = new ListViewItem(new string[] { res[i].ItemName + " " + res[i].ItemPrice + " " + res[i].ItemAmount });
+            //    listViewItem.ImageIndex = i;
+            //    listView.Items.Add(listViewItem);
+            //}
             return true;
 
         }
-        public async Task<bool> ShowProductAtCategory(ListView listView,string type,string category)
+        private async Task<ImageList> ImageListCreate(List<ProductItem> productItems)
         {
-            var res = await _tableProduct.ShowProductAtCategory(type,category);
             ImageList imageList = new ImageList();
-            imageList.ImageSize = new Size(30, 30);
-            var imageByte = await Task.Run(() => (from image in res
+            imageList.ImageSize = new Size(80, 80);
+            var imageByte = await Task.Run(() => (from image in productItems
                                                   select image.ItemImage).ToList());
 
             foreach (var item in imageByte)
@@ -63,18 +60,93 @@ namespace ElectricalShop.Controller
                 Bitmap image = await Task.Run(() => (Bitmap)Image.FromStream(memoryStream));
                 await Task.Run(() => imageList.Images.Add(image));
             }
-            listView.SmallImageList = imageList;
-            listView.LargeImageList = imageList;
+            return imageList;
+        }
+        //ListView listView
+        public async Task<bool> ShowProductAtCategory(TreeView treeView,string type,string category)
+        {
+            var productItems = await _tableProduct.ShowProductAtCategory(type,category);
+            
+            treeView.ImageList = await ImageListCreate(productItems);
 
-            for (int i = 0; i < res.Count; i++)
+            for (int i = 0; i < productItems.Count; i++)
             {
-                ListViewItem listViewItem = new ListViewItem(new string[] { res[i].ItemName + " " + res[i].ItemPrice.ToString() });
-                listViewItem.ImageIndex = i;
-                listView.Items.Add(listViewItem);
+                string text = (productItems[i].ItemName + " " + Math.Round(productItems[i].ItemPrice.Value,2) + " р. Кол-во на складе:" + productItems[i].ItemAmount).ToString();
+                TreeNode treeNode = new TreeNode(text, i, i);
+                treeView.Nodes.Add(treeNode);
             }
+
+            //listView.SmallImageList = imageList;
+            //listView.LargeImageList = imageList;
+
+            //for (int i = 0; i < res.Count; i++)
+            //{
+            //    ListViewItem listViewItem = new ListViewItem(new string[] { res[i].ItemName + " " + res[i].ItemPrice + " " + res[i].ItemAmount.ToString()});
+            //    listViewItem.ImageIndex = i;
+            //    listView.Items.Add(listViewItem);
+            //}
 
             return true;
         }
+        public async Task<bool> ShowProductAtPriceAscendingAsync(TreeView treeView, string type, string category)
+        {
+            var productItems = await _tableProduct.ShowProductAtPriceAscendingAsync(type, category);
+            treeView.ImageList = await ImageListCreate(productItems);
 
+            for (int i = 0; i < productItems.Count; i++)
+            {
+                string text = (productItems[i].ItemName + " " + Math.Round(productItems[i].ItemPrice.Value, 2) + " р. Кол-во на складе:" + productItems[i].ItemAmount).ToString();
+                TreeNode treeNode = new TreeNode(text, i, i);
+                treeView.Nodes.Add(treeNode);
+            }
+            return true;
+        }
+        public async Task<bool> ShowProductAtPriceDescendingAsync(TreeView treeView, string type, string category)
+        {
+            var productItems = await _tableProduct.ShowProductAtPriceDescendingAsync(type, category);
+            treeView.ImageList = await ImageListCreate(productItems);
+
+            for (int i = 0; i < productItems.Count; i++)
+            {
+                string text = (productItems[i].ItemName + " " + Math.Round(productItems[i].ItemPrice.Value, 2) + " р. Кол-во на складе:" + productItems[i].ItemAmount).ToString();
+                TreeNode treeNode = new TreeNode(text, i, i);
+                treeView.Nodes.Add(treeNode);
+            }
+            return true;
+        }
+        public async Task<bool> ShowProductAtExpensivePriceAsync(TreeView treeView, string type, string category)
+        {
+            var productItems = await _tableProduct.ShowProductAtExpensivePriceAsync(type, category);
+            treeView.ImageList = await ImageListCreate(productItems);
+
+            for (int i = 0; i < productItems.Count; i++)
+            {
+                string text = (productItems[i].ItemName + " " + Math.Round(productItems[i].ItemPrice.Value, 2) + " р. Кол-во на складе:" + productItems[i].ItemAmount).ToString();
+                TreeNode treeNode = new TreeNode(text, i, i);
+                treeView.Nodes.Add(treeNode);
+            }
+            return true;
+        }
+        public async Task<bool> ShowProductIsNotAvailableAsync(TreeView treeView, string type, string category)
+        {
+            var productItems = await _tableProduct.ShowProductIsNotAvailableAsync(type, category);
+            treeView.ImageList = await ImageListCreate(productItems);
+
+            for (int i = 0; i < productItems.Count; i++)
+            {
+                string text = (productItems[i].ItemName + " " + Math.Round(productItems[i].ItemPrice.Value, 2) + " р. Кол-во на складе:" + productItems[i].ItemAmount).ToString();
+                TreeNode treeNode = new TreeNode(text, i, i);
+                treeView.Nodes.Add(treeNode);
+            }
+            return true;
+        }
+        public async Task<string[]> ShowProductAsync(string productName)
+        {
+            var product =  await _tableProduct.ShowProductAsync(productName);
+            string[] text = new string[2];
+            text[0] = product.ItemCharacteristics;
+            text[1] = product.ItemDescription;
+            return text;
+        }
     }
 }

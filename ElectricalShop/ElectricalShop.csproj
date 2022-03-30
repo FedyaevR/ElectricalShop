@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\AdminController.cs" />
+    <Compile Include="Controller\CartController.cs" />
     <Compile Include="Controller\ShopController.cs" />
     <Compile Include="Controller\UserController.cs" />
     <Compile Include="Model\ProductCategory.cs">
@@ -116,6 +117,12 @@
     <Compile Include="View\AdminForm.Designer.cs">
       <DependentUpon>AdminForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\CustomerCartForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\CustomerCartForm.Designer.cs">
+      <DependentUpon>CustomerCartForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\DeleteProductForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -160,6 +167,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\AdminForm.resx">
       <DependentUpon>AdminForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\CustomerCartForm.resx">
+      <DependentUpon>CustomerCartForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\DeleteProductForm.resx">
       <DependentUpon>DeleteProductForm.cs</DependentUpon>

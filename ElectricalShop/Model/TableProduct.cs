@@ -176,18 +176,85 @@ namespace ElectricalShop.Model
                     return false;
                 }
             }
-        } 
-
-        public async Task<Bitmap> ShowImage()
+        }
+        public async Task<List<ProductItem>> ShowProductAtPriceAscendingAsync(string type, string category)
+        {
+            
+            using (Product_DB db = new Product_DB())
+            {
+                var res =  await Task.Run(() => (from item in db.ProductItem
+                                             where item.ProductCategory.ProductType.Type == type && item.ProductCategory.Category == category
+                                             select item).ToList<ProductItem>());
+              return await Task.Run(()=> res.OrderBy(i=> i.ItemPrice).ToList<ProductItem>());
+            }
+        }
+        public async Task<List<ProductItem>> ShowProductAtPriceDescendingAsync(string type, string category)
         {
             using (Product_DB db = new Product_DB())
             {
-                var res = await Task.Run(() => db.ProductItem.FirstOrDefault(i => i.ItemId == 2).ItemImage);
-                System.IO.MemoryStream memoryStream = new System.IO.MemoryStream(res);
-                Bitmap image = await Task.Run(() => (Bitmap)Image.FromStream(memoryStream));
-                return image;
+                var res = await Task.Run(() => (from item in db.ProductItem
+                                                where item.ProductCategory.ProductType.Type == type && item.ProductCategory.Category == category
+                                                select item).ToList<ProductItem>());
+                return await Task.Run(() => res.OrderByDescending(i => i.ItemPrice).ToList<ProductItem>());
             }
         }
+        public async Task<List<ProductItem>> ShowProductAtExpensivePriceAsync(string type, string category)
+        {
+            
+            using (Product_DB db = new Product_DB())
+            {
+                var listProduct = await Task.Run(() => (from item in db.ProductItem
+                                                where item.ProductCategory.ProductType.Type == type && item.ProductCategory.Category == category
+                                                select item).ToList<ProductItem>());
+                var res =  await Task.Run(() => listProduct.OrderByDescending(i => i.ItemPrice).ToList<ProductItem>());
+                if (res.Count > 10)
+                {
+                    res.RemoveRange(10, res.Count);
+                }
+                return res;
+            }
+        }
+        public async Task<List<ProductItem>> ShowProductIsNotAvailableAsync(string type, string category)
+        {
+            using (Product_DB db = new Product_DB())
+            {
+                return await Task.Run(() => (from item in db.ProductItem
+                                                        where item.ProductCategory.ProductType.Type == type && item.ProductCategory.Category == category && item.ItemAmount <= 0
+                                                        select item).ToList<ProductItem>());
+            }
+        }
+        public async Task<ProductItem> ShowProductAsync(string productName)
+        {
+            using (Product_DB db = new Product_DB())
+            {
+                return await Task.Run(() => db.ProductItem.FirstOrDefault(i => productName.Contains(i.ItemName)));
+            }
+        }
+        public async Task<bool> BuyProduct(string productName, int amount)
+        {
+            using (Product_DB db = new Product_DB())
+            {
+                var res = await Task.Run(() => db.ProductItem.FirstOrDefault(i => productName.Contains(i.ItemName)));
+                if (res.ItemAmount < amount)
+                {
+                    throw new ArgumentException("This quantity is not in stock");
+                }
+                else
+                {
+                   await Task.Run(()=> db.ProductItem.FirstOrDefault(i => productName.Contains(i.ItemName)).ItemAmount -= amount);
+                }
+                var count = await db.SaveChangesAsync();
+                if (count > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+       
 
     }
 }

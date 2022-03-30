@@ -72,5 +72,13 @@ namespace ElectricalShop.Model
             }
             
         }
+        public async Task<int> GetUserId(string login, string password)
+        {
+            using (DB_Users db = new DB_Users())
+            {
+                var id = await Task.Run(()=> db.User.FirstOrDefault(i => i.Login == login && i.Password == password).Id);
+                return id;            
+            }
+        }
     }
 }

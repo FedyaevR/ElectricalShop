@@ -16,6 +16,7 @@ namespace ElectricalShop.View
     {
         TableProduct tableProduct = new TableProduct();
         UserController _userController = new UserController();
+        int _userId;
         public LoginForm()
         {
             InitializeComponent();
@@ -41,7 +42,8 @@ namespace ElectricalShop.View
             this.Visible = false;
             if (await _userController.Enter(textBox_Login.Text, textBox_Password.Text) == "Пользователь")
             {
-                ShopForm _shopForm = new ShopForm(this);
+                _userId = await _userController.GetUserId(textBox_Login.Text, textBox_Password.Text);
+                ShopForm _shopForm = new ShopForm(this,_userId);
                 _shopForm.ShowDialog();
             }
         }
@@ -58,7 +60,7 @@ namespace ElectricalShop.View
                 }
                 else
                 {
-                    ShopForm shopForm = new ShopForm(this);
+                    ShopForm shopForm = new ShopForm(this,_userId);
                     shopForm.ShowDialog();
                 }
             }

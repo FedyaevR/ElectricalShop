@@ -32,5 +32,9 @@ namespace ElectricalShop.Controller
                 return "Пользователь";
             }
         }
+        public async Task<int> GetUserId(string login, string password)
+        {
+           return await _tableUsers.GetUserId(login, password);
+        }
     }
 }
