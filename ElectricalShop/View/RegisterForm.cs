@@ -21,6 +21,11 @@ namespace ElectricalShop.View
             this._loginForm = loginForm;
         }
 
+        /// <summary>
+        /// Зарегистрировать пользователя.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void button_Register_Click(object sender, EventArgs e)
         {
             button_Register.Enabled = false;
@@ -32,7 +37,7 @@ namespace ElectricalShop.View
             try
             {
               
-                if (await _userController.AddUser(textBox_FirstName.Text, textBox_LastName.Text, (int)numericUpDown_Age.Value,
+                if (await _userController.AddUserAsync(textBox_FirstName.Text, textBox_LastName.Text, (int)numericUpDown_Age.Value,
                     comboBox_UserCategory.SelectedItem.ToString(), textBox_Login.Text, textBox_Password.Text))
                 {
                     

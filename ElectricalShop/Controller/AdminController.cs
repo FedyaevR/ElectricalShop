@@ -14,11 +14,20 @@ namespace ElectricalShop.Controller
     {
         TableProduct _tableProduct = new TableProduct();
         DataGridView _dataGridView;
+        /// <summary>
+        /// Загрузка типов продукта.
+        /// </summary>
+        /// <returns>Список типов</returns>
         public async Task<List<string>> LoadProductTypeAsync()
         {
             return await _tableProduct.ShowProductTypeAsync();
 
         }
+        /// <summary>
+        /// Загрузка категорий продукта.
+        /// </summary>
+        /// <param name="type">Тип продукта.</param>
+        /// <returns>Список категорий.</returns>
         public async Task<List<string>> LoadProductCategoryAsync(string type)
         {
             return await _tableProduct.ShowProductCategoryAsync(type);
@@ -36,33 +45,56 @@ namespace ElectricalShop.Controller
         /// <param name="productDescription">Описание продукта.</param>
         /// <param name="productImage">Изображение продукта.(Может отсутсвовать)</param>
         /// <returns>Метод возвращет true в случае успешного добавления продукта, false в случае если продукт в БД не добавлен.</returns>
-        public async Task<bool> AddProduct(string productType, string productCategory, string productName, decimal productPrice,
+        public async Task<bool> AddProductAsync(string productType, string productCategory, string productName, decimal productPrice,
             string productColor, int productAmount, string productCharacteristic, string productDescription, Image productImage = null)
         {
-            if (await _tableProduct.AddProduct(productType, productCategory, productName, productPrice, productColor, productAmount, productCharacteristic, productDescription, productImage))
+            if (await _tableProduct.AddProductAsync(productType, productCategory, productName, productPrice, productColor, productAmount, productCharacteristic, productDescription, productImage))
             {
                 return true;
             }
             return false;
         }
-
-        public async Task<bool> ShowAllProduct(DataGridView dataGridView)
+        /// <summary>
+        /// Вывод всех продуктов.
+        /// </summary>
+        /// <param name="dataGridView"></param>
+        /// <returns>Удалось ли вывести список продуктов.</returns>
+        public async Task<bool> ShowAllProductAsync(DataGridView dataGridView)
         {
             _dataGridView = dataGridView;
-            _dataGridView.DataSource =  await _tableProduct.ShowAllDB();
-            _dataGridView.Columns.RemoveAt(9);
+            _dataGridView.DataSource =  await _tableProduct.ShowAllDBAsync();
+            _dataGridView.Columns.RemoveAt(9); //удаление лишнего столбца 
             return true;
         }
-        public async Task<bool> ShowProductAtCategory(string type, string category)
+        /// <summary>
+        /// Вывод продукта в категории.
+        /// </summary>
+        /// <param name="type">Тип</param>
+        /// <param name="category">Категория</param>
+        /// <returns>Удалось ли вывести список продуктов в категории.</returns>
+        public async Task<bool> ShowProductAtCategoryAsync(string type, string category)
         {
-            _dataGridView.DataSource = await _tableProduct.ShowProductAtCategory(type,category);
-            _dataGridView.Columns.RemoveAt(9);
+            _dataGridView.DataSource = await _tableProduct.ShowProductAtCategoryAsync(type,category);
+            _dataGridView.Columns.RemoveAt(9); //удаление лишнего столбца 
             return true;
         }
-        public async Task<bool> UpdateProduct(int itemId, string productName, decimal productPrice,
+        /// <summary>
+        /// Изменение данных продукта с сохранением в БД.
+        /// </summary>
+        /// <param name="itemId">ID товара</param>
+        /// <param name="productName">Название товара</param>
+        /// <param name="productPrice">Стоимость товара</param>
+        /// <param name="productColor">Цвет</param>
+        /// <param name="productAmount">Кол-во товара на складе</param>
+        /// <param name="productCharacteristic">Характеристика товара</param>
+        /// <param name="productDescription">Описание товара</param>
+        /// <param name="oldImage">Прежнее изображение</param>
+        /// <param name="productImage">Новое изображение(при изменении) по умолчанию = null</param>
+        /// <returns>Результат обновления товара</returns>
+        public async Task<bool> UpdateProductAsync(int itemId, string productName, decimal productPrice,
             string productColor, int productAmount, string productCharacteristic, string productDescription,byte[] oldImage, Image productImage = null)
         {
-            if (await _tableProduct.UpdateProduct(itemId, productName, productPrice, productColor,
+            if (await _tableProduct.UpdateProductAsync(itemId, productName, productPrice, productColor,
                 productAmount,productCharacteristic, productDescription, oldImage, productImage))
             {
                 return true;
@@ -72,6 +104,11 @@ namespace ElectricalShop.Controller
                 return false;
             }
         }
+        /// <summary>
+        /// Удаление товара из списка и БД.
+        /// </summary>
+        /// <param name="itemId">Id товара</param>
+        /// <returns></returns>
         public async Task<bool> DeleteProductAsync(int itemId)
         {
             if (await _tableProduct.DeleteProductAsync(itemId) == true)

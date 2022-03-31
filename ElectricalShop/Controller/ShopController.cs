@@ -21,13 +21,16 @@ namespace ElectricalShop.Controller
         {
             return await _tableProduct.ShowProductCategoryAsync(type);
         }
-
-        //ListView listView
+        /// <summary>
+        /// Вывод всех товаров
+        /// </summary>
+        /// <param name="treeView"></param>
+        /// <returns></returns>
         public  async Task<bool> ShowAllProductAsync( TreeView treeView)
         {
-            var productItems =  await _tableProduct.ShowAllDB();
+            var productItems =  await _tableProduct.ShowAllDBAsync();
            
-            treeView.ImageList = await ImageListCreate(productItems);
+            treeView.ImageList = await ImageListCreateAsync(productItems);
 
             for (int i = 0; i < productItems.Count; i++)
             {
@@ -35,19 +38,11 @@ namespace ElectricalShop.Controller
                 TreeNode treeNode = new TreeNode(text, i,i);
                 treeView.Nodes.Add(treeNode);
             }
-
-            //listView.SmallImageList = imageList;
-            //listView.LargeImageList = imageList;
-            //for (int i = 0; i < res.Count; i++)
-            //{
-            //    ListViewItem listViewItem = new ListViewItem(new string[] { res[i].ItemName + " " + res[i].ItemPrice + " " + res[i].ItemAmount });
-            //    listViewItem.ImageIndex = i;
-            //    listView.Items.Add(listViewItem);
-            //}
             return true;
 
         }
-        private async Task<ImageList> ImageListCreate(List<ProductItem> productItems)
+
+        private async Task<ImageList> ImageListCreateAsync(List<ProductItem> productItems)
         {
             ImageList imageList = new ImageList();
             imageList.ImageSize = new Size(80, 80);
@@ -62,12 +57,11 @@ namespace ElectricalShop.Controller
             }
             return imageList;
         }
-        //ListView listView
-        public async Task<bool> ShowProductAtCategory(TreeView treeView,string type,string category)
+        public async Task<bool> ShowProductAtCategoryAsync(TreeView treeView,string type,string category)
         {
-            var productItems = await _tableProduct.ShowProductAtCategory(type,category);
+            var productItems = await _tableProduct.ShowProductAtCategoryAsync(type,category);
             
-            treeView.ImageList = await ImageListCreate(productItems);
+            treeView.ImageList = await ImageListCreateAsync(productItems);
 
             for (int i = 0; i < productItems.Count; i++)
             {
@@ -75,23 +69,12 @@ namespace ElectricalShop.Controller
                 TreeNode treeNode = new TreeNode(text, i, i);
                 treeView.Nodes.Add(treeNode);
             }
-
-            //listView.SmallImageList = imageList;
-            //listView.LargeImageList = imageList;
-
-            //for (int i = 0; i < res.Count; i++)
-            //{
-            //    ListViewItem listViewItem = new ListViewItem(new string[] { res[i].ItemName + " " + res[i].ItemPrice + " " + res[i].ItemAmount.ToString()});
-            //    listViewItem.ImageIndex = i;
-            //    listView.Items.Add(listViewItem);
-            //}
-
             return true;
         }
         public async Task<bool> ShowProductAtPriceAscendingAsync(TreeView treeView, string type, string category)
         {
             var productItems = await _tableProduct.ShowProductAtPriceAscendingAsync(type, category);
-            treeView.ImageList = await ImageListCreate(productItems);
+            treeView.ImageList = await ImageListCreateAsync(productItems);
 
             for (int i = 0; i < productItems.Count; i++)
             {
@@ -104,7 +87,7 @@ namespace ElectricalShop.Controller
         public async Task<bool> ShowProductAtPriceDescendingAsync(TreeView treeView, string type, string category)
         {
             var productItems = await _tableProduct.ShowProductAtPriceDescendingAsync(type, category);
-            treeView.ImageList = await ImageListCreate(productItems);
+            treeView.ImageList = await ImageListCreateAsync(productItems);
 
             for (int i = 0; i < productItems.Count; i++)
             {
@@ -117,7 +100,7 @@ namespace ElectricalShop.Controller
         public async Task<bool> ShowProductAtExpensivePriceAsync(TreeView treeView, string type, string category)
         {
             var productItems = await _tableProduct.ShowProductAtExpensivePriceAsync(type, category);
-            treeView.ImageList = await ImageListCreate(productItems);
+            treeView.ImageList = await ImageListCreateAsync(productItems);
 
             for (int i = 0; i < productItems.Count; i++)
             {
@@ -130,7 +113,7 @@ namespace ElectricalShop.Controller
         public async Task<bool> ShowProductIsNotAvailableAsync(TreeView treeView, string type, string category)
         {
             var productItems = await _tableProduct.ShowProductIsNotAvailableAsync(type, category);
-            treeView.ImageList = await ImageListCreate(productItems);
+            treeView.ImageList = await ImageListCreateAsync(productItems);
 
             for (int i = 0; i < productItems.Count; i++)
             {

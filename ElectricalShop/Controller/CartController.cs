@@ -10,9 +10,9 @@ namespace ElectricalShop.Controller
     {
         TableProduct _tableProduct = new TableProduct();
 
-        public async Task<bool> BuyProduct(string productName, int amount)
+        public async Task<bool> BuyProductAsync(string productName, int amount)
         {
-           return await _tableProduct.BuyProduct(productName, amount);
+           return await _tableProduct.BuyProductAsync(productName, amount);
         }
     }
 }

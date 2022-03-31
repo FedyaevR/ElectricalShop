@@ -9,7 +9,16 @@ namespace ElectricalShop.Model
 {
     class TableUsers
     {
-
+        /// <summary>
+        /// Асинхронный метод добавления нового пользователя.
+        /// </summary>
+        /// <param name="firstName">Имя</param>
+        /// <param name="lastName">Фамилия</param>
+        /// <param name="age">Возраст</param>
+        /// <param name="userCategory">Категория:пользователь/админ.</param>
+        /// <param name="login">логин</param>
+        /// <param name="password">пароль</param>
+        /// <returns>Успешено ли добавление</returns>
         public async Task<bool> AddNewUserAsync(string firstName, string lastName, int age, string userCategory, string login, string password)
         {
             if (firstName == "" || lastName == "")
@@ -39,6 +48,13 @@ namespace ElectricalShop.Model
                 return false;
             }
         }
+        /// <summary>
+        /// Асинхронный метод входа в приложение.
+        /// </summary>
+        /// <param name="login">логин</param>
+        /// <param name="password">пароль</param>
+        /// <param name="admin">Статус пользователя - админ?</param>
+        /// <returns>Удалось ли войти в приложиние.</returns>
         public async Task<string> EnterAsync(string login, string password, bool admin = false)
         {
             
@@ -52,22 +68,30 @@ namespace ElectricalShop.Model
                 else
                 {
                     user = await Task.Run(() => db.User.FirstOrDefault(u => u.Login == login && u.Password == password));
-                    if ( user.UserCategory == "Администратор")
+                    if (user != null)
                     {
-                        if (admin == true)
+                        if (user.UserCategory == "Администратор")
                         {
-                            return "Администратор";
+                            if (admin == true)
+                            {
+                                return "Администратор";
+                            }
+                            else
+                            {
+                                throw new ArgumentException("Wrong login or password");
+                            }
+
                         }
                         else
                         {
-                            throw new ArgumentException("Wrong login or password");
+                            return "Пользователь";
                         }
-                       
                     }
                     else
                     {
-                        return "Пользователь";
+                        throw new ArgumentException("Wrong login or password");
                     }
+                   
                 }
             }
             

@@ -62,7 +62,7 @@ namespace ElectricalShop.View
             {
                 for (int i = 0; i < listBox.Items.Count; i++)
                 {
-                    buyResult.Add(await _cartController.BuyProduct(listBox.Items[i].ToString(), _amountProduct[i]));
+                    buyResult.Add(await _cartController.BuyProductAsync(listBox.Items[i].ToString(), _amountProduct[i]));
                 }
                 if(buyResult.All(i=> i == true))
                 {
@@ -77,6 +77,11 @@ namespace ElectricalShop.View
                 }
             }
         }
+        /// <summary>
+        /// Выбор кол-ва товара на покупку.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void numericUpDown_Amount_ValueChanged(object sender, EventArgs e)
         {
             if (listBox.SelectedIndex == -1)

@@ -34,7 +34,11 @@ namespace ElectricalShop.View
                 textBox_ItemColor.Text = colorDialog.Color.Name;
             }
         }
-
+        /// <summary>
+        /// Добавление продукта.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void button_AddProduct_Click(object sender, EventArgs e)
         {
             
@@ -51,7 +55,7 @@ namespace ElectricalShop.View
             numericUpDown_CountAmount.BackColor = Color.White;
             try
             {
-                if (await Task.Run(() => _adminController.AddProduct(type, category, itemName, itemPrice, itemColor, itemAmount, itemCharacteristic, itemDescription, _productImage)))
+                if (await Task.Run(() => _adminController.AddProductAsync(type, category, itemName, itemPrice, itemColor, itemAmount, itemCharacteristic, itemDescription, _productImage)))
                 {
                     MessageBox.Show("Продукт добавлен!");
                     comboBox_ProductType.SelectedIndex = 0;

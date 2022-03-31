@@ -30,12 +30,12 @@ namespace ElectricalShop.View
         private void InitializeComponent()
         {
             this.textBox_Login = new System.Windows.Forms.TextBox();
-            this.textBox_Password = new System.Windows.Forms.TextBox();
             this.button_Enter = new System.Windows.Forms.Button();
             this.linkLabel_AdminLogin = new System.Windows.Forms.LinkLabel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label_Login = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.maskedTextBox_Password = new System.Windows.Forms.MaskedTextBox();
             this.SuspendLayout();
             // 
             // textBox_Login
@@ -44,13 +44,6 @@ namespace ElectricalShop.View
             this.textBox_Login.Name = "textBox_Login";
             this.textBox_Login.Size = new System.Drawing.Size(234, 22);
             this.textBox_Login.TabIndex = 0;
-            // 
-            // textBox_Password
-            // 
-            this.textBox_Password.Location = new System.Drawing.Point(104, 138);
-            this.textBox_Password.Name = "textBox_Password";
-            this.textBox_Password.Size = new System.Drawing.Size(234, 22);
-            this.textBox_Password.TabIndex = 1;
             // 
             // button_Enter
             // 
@@ -102,22 +95,29 @@ namespace ElectricalShop.View
             this.label1.TabIndex = 6;
             this.label1.Text = "Пароль:";
             // 
+            // maskedTextBox_Password
+            // 
+            this.maskedTextBox_Password.Location = new System.Drawing.Point(104, 138);
+            this.maskedTextBox_Password.Name = "maskedTextBox_Password";
+            this.maskedTextBox_Password.PasswordChar = '*';
+            this.maskedTextBox_Password.Size = new System.Drawing.Size(234, 22);
+            this.maskedTextBox_Password.TabIndex = 7;
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(459, 370);
+            this.Controls.Add(this.maskedTextBox_Password);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label_Login);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.linkLabel_AdminLogin);
             this.Controls.Add(this.button_Enter);
-            this.Controls.Add(this.textBox_Password);
             this.Controls.Add(this.textBox_Login);
             this.Name = "LoginForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Авторизация";
-            this.Load += new System.EventHandler(this.LoginForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -126,11 +126,11 @@ namespace ElectricalShop.View
         #endregion
 
         private System.Windows.Forms.TextBox textBox_Login;
-        private System.Windows.Forms.TextBox textBox_Password;
         private System.Windows.Forms.Button button_Enter;
         private System.Windows.Forms.LinkLabel linkLabel_AdminLogin;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Label label_Login;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.MaskedTextBox maskedTextBox_Password;
     }
 }

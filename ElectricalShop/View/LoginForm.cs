@@ -14,7 +14,6 @@ namespace ElectricalShop.View
 {
     public partial class LoginForm : Form
     {
-        TableProduct tableProduct = new TableProduct();
         UserController _userController = new UserController();
         int _userId;
         public LoginForm()
@@ -23,11 +22,11 @@ namespace ElectricalShop.View
             
         }
 
-        private void LoginForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
+        /// <summary>
+        /// Переход в форму регистрации.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             this.Visible = false;
@@ -35,42 +34,68 @@ namespace ElectricalShop.View
             registerForm.ShowDialog();
           
         }
-
+        /// <summary>
+        /// Вход в приложение как пользователь.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void button_Enter_Click(object sender, EventArgs e)
         {
-            //await tableProduct.ShowProduct(1, 1);
-            this.Visible = false;
-            if (await _userController.Enter(textBox_Login.Text, textBox_Password.Text) == "Пользователь")
-            {
-                _userId = await _userController.GetUserId(textBox_Login.Text, textBox_Password.Text);
-                ShopForm _shopForm = new ShopForm(this,_userId);
-                _shopForm.ShowDialog();
-            }
-        }
-
-        private async void linkLabel_AdminLogin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            this.Visible = false;
+            textBox_Login.BackColor = Color.White;
+            maskedTextBox_Password.BackColor = Color.White;
+           
             try
             {
-                if (await _userController.Enter(textBox_Login.Text, textBox_Password.Text, true) == "Администратор")
+                
+                if (await _userController.EnterAsync(textBox_Login.Text, maskedTextBox_Password.Text) == "Пользователь")
                 {
-                    AdminForm adminForm = new AdminForm(this);
-                    adminForm.ShowDialog();
-                }
-                else
-                {
-                    ShopForm shopForm = new ShopForm(this,_userId);
-                    shopForm.ShowDialog();
+                    this.Visible = false;
+                    _userId = await _userController.GetUserId(textBox_Login.Text, maskedTextBox_Password.Text);
+                    ShopForm _shopForm = new ShopForm(this, _userId);
+                    _shopForm.ShowDialog();
                 }
             }
             catch (ArgumentException ex)
             {
+
                 if (ex.Message == "Wrong login or password")
                 {
-                    MessageBox.Show("Неврный логин или пароль для администратора");
+                    textBox_Login.BackColor = Color.Red;
+                    maskedTextBox_Password.BackColor = Color.Red;
+                    
+                }
+                if (ex.Message == "This login doesn't exist")
+                {
+                    textBox_Login.BackColor = Color.Red;
                 }
             }
+           
+           
+        }
+        /// <summary>
+        /// Вход в приложение как администратор.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void linkLabel_AdminLogin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            textBox_Login.BackColor = Color.White;
+            maskedTextBox_Password.BackColor = Color.White;
+           
+            
+            if (await _userController.EnterAsync(textBox_Login.Text, maskedTextBox_Password.Text, true) == "Администратор")
+            {
+                this.Visible = false;
+                AdminForm adminForm = new AdminForm(this);
+                adminForm.ShowDialog();
+            }
+            else
+            {
+                
+                textBox_Login.BackColor = Color.Red;
+                maskedTextBox_Password.BackColor = Color.Red;
+            }
+
         }
     }
 }

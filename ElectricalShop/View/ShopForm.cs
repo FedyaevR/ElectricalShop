@@ -28,7 +28,11 @@ namespace ElectricalShop.View
             comboBox_SortProduct.SelectedIndex = 0;
            
         }
-
+        /// <summary>
+        /// Сортировка товара по условиям.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void ComboBox_SortProduct_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBox_ProductCategory.SelectedIndex <= 0) return;
@@ -67,6 +71,11 @@ namespace ElectricalShop.View
             await _shopController.ShowAllProductAsync(treeView);
 
         }
+        /// <summary>
+        /// Вывод товара определенного типа.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void ComboBox_ProductType_SelectedIndexChanged1(object sender, EventArgs e)
         {
             comboBox_ProductCategory.Items.Clear();
@@ -80,14 +89,22 @@ namespace ElectricalShop.View
         {
             _loginForm.Close();
         }
-
+        /// <summary>
+        /// Вывод товара в категории.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void comboBox_ProductCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBox_ProductCategory.SelectedIndex <= 0) return;
             treeView.Nodes.Clear();
-            await _shopController.ShowProductAtCategory(treeView, comboBox_ProductType.SelectedItem.ToString(),comboBox_ProductCategory.SelectedItem.ToString());
+            await _shopController.ShowProductAtCategoryAsync(treeView, comboBox_ProductType.SelectedItem.ToString(),comboBox_ProductCategory.SelectedItem.ToString());
         }
-
+        /// <summary>
+        /// Вывод описания и хар-ки выбранного товара.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void treeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             var res =  await _shopController.ShowProductAsync(treeView.SelectedNode.Text);

@@ -111,9 +111,19 @@ namespace ElectricalShop.View
             // numericUpDown_Age
             // 
             this.numericUpDown_Age.Location = new System.Drawing.Point(372, 32);
+            this.numericUpDown_Age.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             this.numericUpDown_Age.Name = "numericUpDown_Age";
             this.numericUpDown_Age.Size = new System.Drawing.Size(94, 22);
             this.numericUpDown_Age.TabIndex = 8;
+            this.numericUpDown_Age.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             // 
             // label_Age
             // 
